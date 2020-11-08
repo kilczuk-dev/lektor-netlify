@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 import click
 import requests
 from lektor.pluginsystem import Plugin
@@ -32,7 +34,7 @@ class NetlifyPublisher(Publisher):
         response.raise_for_status()
         j = response.json()
         for site in j:
-            site_url = urls.url_parse(unicode(site['url']))
+            site_url = urls.url_parse(str(site['url']))
             if site_url.host == host:
                 site_id = site['site_id']
                 break
@@ -41,7 +43,7 @@ class NetlifyPublisher(Publisher):
             force_ssl = bool_from_string(server_info.extra.get('force_ssl'),
                                          default=False)
 
-            print('Creating new Netlify site "%s" at %s' % (site_name, host))
+            print(('Creating new Netlify site "%s" at %s' % (site_name, host)))
             response = requests.post(sites_url, {
                 'name': site_name,
                 'custom_domain': host,
@@ -66,8 +68,8 @@ class NetlifyPublisher(Publisher):
 
 
 class NetlifyPlugin(Plugin):
-    name = u'Netlify'
-    description = u'Lektor plugin to publish your site with Netlify.'
+    name = 'Netlify'
+    description = 'Lektor plugin to publish your site with Netlify.'
 
     def on_setup_env(self, **extra):
         try:

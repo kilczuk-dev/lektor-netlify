@@ -14,7 +14,7 @@ with open('lektor_netlify.py', 'rb') as f:
         f.read().decode('utf-8')).group(1)))
 
 setup(
-    author=u'A. Jesse Jiryu Davis',
+    author='A. Jesse Jiryu Davis',
     author_email='jesse@emptysquare.net',
     description=description,
     keywords = 'Lektor plugin static-site blog netlify',
